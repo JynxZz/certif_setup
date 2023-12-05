@@ -47,7 +47,7 @@ function setup_virtual_env() {
   pyenv local "$env_name"
 
   echo -e "\nUpdating Pip..."
-  python3 -m pip install --upgrade pip
+  python3 -m pip install --quiet --upgrade pip
 }
 
 #TODO: Create Certtif Zone
@@ -102,20 +102,20 @@ setup_virtual_env
 case $os_type in
     Mac_Intel)
         echo "Performing operations for macOS Intel."
-        pip install -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_intel.txt
+        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_intel.txt
         ;;
     Mac_Silicon)
         echo "Performing operations for macOS Silicon."
-        pip install -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_silicon.txt
+        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_silicon.txt
         ;;
     Linux)
         echo "Performing operations for Linux."
-        pip install -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt
+        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt
         ;;
     Windows)
         echo "Performing operations for Windows."
         echo "Hmmm ... maybe time to have a better OS"
-        pip install -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt
+        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt
         ;;
     *)
         echo "OS not recognized. Exiting."
