@@ -123,6 +123,12 @@ case $os_type in
         ;;
 esac
 
-zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/boilerplate/main/certif_setup/test_python.sh)"
-zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/boilerplate/main/certif_setup/test_packages.sh)"
-python -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/boilerplate/main/certif_setup/test_setup.py)"
+
+# Test all setup
+echo "Testing the setup for the Certification"
+
+zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_python.sh)"
+zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_packages.sh)"
+python -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_setup.py)"
+
+echo "Now, it's your turn to code ... "
