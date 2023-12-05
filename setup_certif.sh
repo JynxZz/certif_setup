@@ -7,9 +7,24 @@
 # Python version validation, and installation of required packages based on the detected OS.
 # ---------------------------------------------------------------------------------
 
+# Waiting spinner
+spinner() {
+    local pid=$1
+    local delay=0.1
+    local spinstr='|/-\'
+    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+        local temp=${spinstr#?}
+        printf "   %c   " "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b\b"
+    done
+    printf "    \b\b\b\b"
+}
 
 #TODO: Check Os
 function check_os() {
+  echo -e "\n####################"
     local os_type
 
     # Use uname to determine the OS and architecture
@@ -35,7 +50,7 @@ function check_os() {
 
 #TODO: Setup virtual Env
 function setup_virtual_env() {
-  echo -e "\n$blue####################$clear"
+  echo -e "\n####################"
 
   env_name="lewagon_certif"
   selected_version="3.10.6"
@@ -65,6 +80,7 @@ fucntion check_dir(){
 
 #TODO: Checking Python3.10.6 installed
 function check_python_version(){
+  echo -e "\n####################"
   target_version="3.10.6"
 
   # Check if pyenv is installed
@@ -90,29 +106,14 @@ function check_python_version(){
   fi
 }
 
-# Waiting spinner
-spinner() {
-    local pid=$1
-    local delay=0.1
-    local spinstr='|/-\'
-    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-        local temp=${spinstr#?}
-        printf " [%c]  " "$spinstr"
-        local spinstr=$temp${spinstr%"$temp"}
-        sleep $delay
-        printf "\b\b\b\b\b\b"
-    done
-    printf "    \b\b\b\b"
-}
-
 
 # Main Zone
 # Get the operating system type
 os_type=$(check_os)
 echo "Detected OS: $os_type"
-check_python_version
-check_dir
-setup_virtual_env
+check_python_version & spinner $!
+check_dir & spinner $!
+setup_virtual_env & spinner $!
 
 case $os_type in
     Mac_Intel)
@@ -127,12 +128,14 @@ case $os_type in
         ;;
     Linux)
         echo "Performing operations for Linux."
-        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt
+        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
+        spinner $!
         ;;
     Windows)
         echo "Performing operations for Windows."
         echo "Hmmm ... maybe time to have a better OS"
-        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt
+        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
+        spinner $!
         ;;
     *)
         echo "OS not recognized. Exiting."
@@ -144,8 +147,8 @@ esac
 # Test all setup
 echo "Testing the setup for the Certification"
 
-zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_python.sh)"
-zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_packages.sh)"
-python -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_setup.py)"
+zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_python.sh)" & spinner $!
+zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_packages.sh)" & spinner $!
+python -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_setup.py)" & spinner $!
 
 echo "Now, it's your turn to code ... "
