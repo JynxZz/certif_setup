@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# Tools to setup a clean setup for the certif
+# ---------------------------------------------------------------------------------
+# Author: JynxZz
+# Date Created: [2023-12-05]
+# Script Description: This script automates the setup of a Python development environment, including OS checks, virtual environment creation,
+# Python version validation, and installation of required packages based on the detected OS.
+# ---------------------------------------------------------------------------------
+
 
 #TODO: Check Os
 function check_os() {

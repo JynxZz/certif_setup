@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# ---------------------------------------------------------------------------------
+# Author: JynxZz
+# Date Created: [2023-12-05]
+# Script Description: Test to check the good python verison install
+# WIP / TODO :  Passing the Expected Version as an Argument
+# ---------------------------------------------------------------------------------
+
+
 # Expected Python version
 expected_version="Python 3.10.6"
 

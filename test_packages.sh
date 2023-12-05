@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# ---------------------------------------------------------------------------------
+# Author: JynxZz
+# Date Created: [2023-12-05]
+# Script Description: Test to check all packages install in the environement
+# ---------------------------------------------------------------------------------
+
+
 # Define common required packages
 REQUIRED_COMMON=('pytest' 'pylint' 'ipdb' 'PyYAML' 'nbresult' 'autopep8' 'flake8' 'yapf' 'lxml' 'requests' 'beautifulsoup4' 'jupyterlab' 'pandas' 'matplotlib' 'seaborn' 'plotly' 'scikit-learn' 'pandas-profiling' 'nbconvert' 'xgboost' 'statsmodels' 'jupyter-resource-usage')
 
