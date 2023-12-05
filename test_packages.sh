@@ -45,7 +45,7 @@ if [ ${#missing[@]} -gt 0 ]; then
   echo '❌ Some packages are missing and will be installed:'
   for pkg in "${missing[@]}"; do
     echo "Installing: $pkg"
-    pip install "$pkg"
+    pip install --quiet "$pkg"
   done
   echo 'All missing packages have been installed.'
 else

@@ -90,6 +90,21 @@ function check_python_version(){
   fi
 }
 
+# Waiting spinner
+spinner() {
+    local pid=$1
+    local delay=0.1
+    local spinstr='|/-\'
+    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+        local temp=${spinstr#?}
+        printf " [%c]  " "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b\b"
+    done
+    printf "    \b\b\b\b"
+}
+
 
 # Main Zone
 # Get the operating system type
@@ -102,11 +117,13 @@ setup_virtual_env
 case $os_type in
     Mac_Intel)
         echo "Performing operations for macOS Intel."
-        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_intel.txt
+        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_intel.txt &
+        spinner $!
         ;;
     Mac_Silicon)
         echo "Performing operations for macOS Silicon."
-        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_silicon.txt
+        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_silicon.txt &
+        spinner $!
         ;;
     Linux)
         echo "Performing operations for Linux."
