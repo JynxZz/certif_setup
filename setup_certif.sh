@@ -109,46 +109,52 @@ function check_python_version(){
 
 # Main Zone
 # Get the operating system type
+echo -e "\n####################"
 os_type=$(check_os)
-echo "Detected OS: $os_type"
-check_python_version & spinner $!
-check_dir & spinner $!
-setup_virtual_env & spinner $!
+echo -e "Detected OS: $os_type \n"
+check_python_version
+check_dir
+setup_virtual_env
 
 case $os_type in
     Mac_Intel)
-        echo "Performing operations for macOS Intel."
+        echo -e "\n####################"
+        echo -e "\nPerforming operations for macOS Intel."
         pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_intel.txt &
         spinner $!
         ;;
     Mac_Silicon)
-        echo "Performing operations for macOS Silicon."
+        echo -e "\n####################"
+        echo -e "\nPerforming operations for macOS Silicon."
         pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_silicon.txt &
         spinner $!
         ;;
     Linux)
-        echo "Performing operations for Linux."
+        echo -e "\n####################"
+        echo -e "\nPerforming operations for Linux."
         pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
         spinner $!
         ;;
     Windows)
-        echo "Performing operations for Windows."
+        echo -e "\n####################"
+        echo -e "\nPerforming operations for Windows."
         echo "Hmmm ... maybe time to have a better OS"
         pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
         spinner $!
         ;;
     *)
-        echo "OS not recognized. Exiting."
+        echo -e "\n####################"
+        echo -e "\nOS not recognized. Exiting."
         exit 1
         ;;
 esac
 
 
 # Test all setup
-echo "Testing the setup for the Certification"
+echo -e "\nTesting the setup for the Certification"
 
-zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_python.sh)" & spinner $!
-zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_packages.sh)" & spinner $!
-python -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_setup.py)" & spinner $!
+zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_python.sh)"
+zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_packages.sh)"
+python -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_setup.py)"
 
-echo "Now, it's your turn to code ... "
+echo -e "\nNow, it's your turn to code ... "

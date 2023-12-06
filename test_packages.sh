@@ -6,6 +6,20 @@
 # Script Description: Test to check all packages install in the environement
 # ---------------------------------------------------------------------------------
 
+# Waiting spinner
+spinner() {
+    local pid=$1
+    local delay=0.1
+    local spinstr='|/-\'
+    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+        local temp=${spinstr#?}
+        printf "   %c   " "$spinstr"
+        local spinstr=$temp${spinstr%"$temp"}
+        sleep $delay
+        printf "\b\b\b\b\b\b"
+    done
+    printf "    \b\b\b\b"
+}
 
 # Define common required packages
 REQUIRED_COMMON=('pytest' 'pylint' 'ipdb' 'PyYAML' 'nbresult' 'autopep8' 'flake8' 'yapf' 'lxml' 'requests' 'beautifulsoup4' 'jupyterlab' 'pandas' 'matplotlib' 'seaborn' 'plotly' 'scikit-learn' 'pandas-profiling' 'nbconvert' 'xgboost' 'statsmodels' 'jupyter-resource-usage')
@@ -34,7 +48,8 @@ missing=()
 
 # Check each required package
 for required_pkg in "${REQUIRED[@]}"; do
-  echo "Checking: $required_pkg"
+  echo "Checking: $required_pkg" &
+  spinner $!
   if ! echo "$PACKAGES" | grep -qE "^$required_pkg="; then
     missing+=("$required_pkg")
   fi
@@ -45,9 +60,10 @@ if [ ${#missing[@]} -gt 0 ]; then
   echo '❌ Some packages are missing and will be installed:'
   for pkg in "${missing[@]}"; do
     echo "Installing: $pkg"
-    pip install --quiet "$pkg"
+    pip install --quiet "$pkg" &
+  spinner $!
   done
-  echo 'All missing packages have been installed.'
+  echo -e '✅ All missing packages have been installed.\n'
 else
-  echo '✅ Everything is fine, continue the setup instructions.'
+  echo -e '✅ Everything is fine, continue the setup instructions.\n'
 fi

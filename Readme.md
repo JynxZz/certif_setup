@@ -10,4 +10,10 @@ Just Copy / Paste this command in your terminal.
 curl https://raw.githubusercontent.com/JynxZz/certif_setup/main/setup_certif.sh | zsh
 ```
 
+Your zone for the certification store
+
+```bash
+cd ~/code/certification
+```
+
 ## Good Luck
