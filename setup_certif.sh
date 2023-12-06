@@ -24,28 +24,27 @@ spinner() {
 
 #TODO: Check Os
 function check_os() {
-  echo -e "\n####################"
-    local os_type
+  local os_type
 
-    # Use uname to determine the OS and architecture
-    case "$(uname -s)" in
-        Linux*)     os_type="Linux";;
-        Darwin*)
-            # Check for macOS architecture
-            local arch=$(uname -m)
-            if [ "$arch" = "x86_64" ]; then
-                os_type="Mac_Intel"
-            elif [ "$arch" = "arm64" ]; then
-                os_type="Mac_Silicon"
-            else
-                os_type="Mac_Unknown"
-            fi
-            ;;
-        CYGWIN*|MINGW*) os_type="Windows";;
-        *)          os_type="UNKNOWN";;
-    esac
+  # Use uname to determine the OS and architecture
+  case "$(uname -s)" in
+      Linux*)     os_type="Linux";;
+      Darwin*)
+          # Check for macOS architecture
+          local arch=$(uname -m)
+          if [ "$arch" = "x86_64" ]; then
+              os_type="Mac_Intel"
+          elif [ "$arch" = "arm64" ]; then
+              os_type="Mac_Silicon"
+          else
+              os_type="Mac_Unknown"
+          fi
+          ;;
+      CYGWIN*|MINGW*) os_type="Windows";;
+      *)          os_type="UNKNOWN";;
+  esac
 
-    echo $os_type
+  echo $os_type
 }
 
 #TODO: Setup virtual Env
@@ -117,36 +116,36 @@ check_dir
 setup_virtual_env
 
 case $os_type in
-    Mac_Intel)
-        echo -e "\n####################"
-        echo -e "\nPerforming operations for macOS Intel."
-        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_intel.txt &
-        spinner $!
-        ;;
-    Mac_Silicon)
-        echo -e "\n####################"
-        echo -e "\nPerforming operations for macOS Silicon."
-        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_silicon.txt &
-        spinner $!
-        ;;
-    Linux)
-        echo -e "\n####################"
-        echo -e "\nPerforming operations for Linux."
-        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
-        spinner $!
-        ;;
-    Windows)
-        echo -e "\n####################"
-        echo -e "\nPerforming operations for Windows."
-        echo "Hmmm ... maybe time to have a better OS"
-        pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
-        spinner $!
-        ;;
-    *)
-        echo -e "\n####################"
-        echo -e "\nOS not recognized. Exiting."
-        exit 1
-        ;;
+  Mac_Intel)
+      echo -e "\n####################"
+      echo -e "\nPerforming operations for macOS Intel."
+      pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_intel.txt &
+      spinner $!
+      ;;
+  Mac_Silicon)
+      echo -e "\n####################"
+      echo -e "\nPerforming operations for macOS Silicon."
+      pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_silicon.txt &
+      spinner $!
+      ;;
+  Linux)
+      echo -e "\n####################"
+      echo -e "\nPerforming operations for Linux."
+      pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
+      spinner $!
+      ;;
+  Windows)
+      echo -e "\n####################"
+      echo -e "\nPerforming operations for Windows."
+      echo "Hmmm ... maybe time to have a better OS"
+      pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
+      spinner $!
+      ;;
+  *)
+      echo -e "\n####################"
+      echo -e "\nOS not recognized. Exiting."
+      exit 1
+      ;;
 esac
 
 
