@@ -110,7 +110,7 @@ function check_python_version(){
 # Get the operating system type
 echo -e "\n####################"
 os_type=$(check_os)
-echo -e "Detected OS: $os_type \n"
+echo "Detected OS: $os_type"
 check_python_version
 check_dir
 setup_virtual_env
