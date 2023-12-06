@@ -7,6 +7,11 @@
 # Python version validation, and installation of required packages based on the detected OS.
 # ---------------------------------------------------------------------------------
 
+red='\e[30m'
+green='\e[32m'
+blue='\e[34m'
+clear='\e[0m'
+
 # Waiting spinner
 spinner() {
     local pid=$1
@@ -14,7 +19,7 @@ spinner() {
     local spinstr='|/-\'
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
         local temp=${spinstr#?}
-        printf "   %c   " "$spinstr"
+        printf "%c" "$spinstr"
         local spinstr=$temp${spinstr%"$temp"}
         sleep $delay
         printf "\b\b\b\b\b\b"
@@ -49,7 +54,7 @@ function check_os() {
 
 #TODO: Setup virtual Env
 function setup_virtual_env() {
-  echo -e "\n####################"
+  echo -e "\n${blue}####################$clear"
 
   env_name="lewagon_certif"
   selected_version="3.10.6"
@@ -79,7 +84,7 @@ fucntion check_dir(){
 
 #TODO: Checking Python3.10.6 installed
 function check_python_version(){
-  echo -e "\n####################"
+  echo -e "\n${blue}####################$clear"
   target_version="3.10.6"
 
   # Check if pyenv is installed
@@ -108,7 +113,7 @@ function check_python_version(){
 
 # Main Zone
 # Get the operating system type
-echo -e "\n####################"
+echo -e "\n${blue}####################$clear"
 os_type=$(check_os)
 echo "Detected OS: $os_type"
 check_python_version
@@ -117,32 +122,32 @@ setup_virtual_env
 
 case $os_type in
   Mac_Intel)
-      echo -e "\n####################"
+      echo -e "\n${blue}####################$clear"
       echo -e "\nPerforming operations for macOS Intel."
       pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_intel.txt &
       spinner $!
       ;;
   Mac_Silicon)
-      echo -e "\n####################"
+      echo -e "\n${blue}####################$clear"
       echo -e "\nPerforming operations for macOS Silicon."
       pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/apple_silicon.txt &
       spinner $!
       ;;
   Linux)
-      echo -e "\n####################"
+      echo -e "\n${blue}####################$clear"
       echo -e "\nPerforming operations for Linux."
       pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
       spinner $!
       ;;
   Windows)
-      echo -e "\n####################"
+      echo -e "\n${blue}####################$clear"
       echo -e "\nPerforming operations for Windows."
       echo "Hmmm ... maybe time to have a better OS"
       pip install --quiet -r https://raw.githubusercontent.com/lewagon/data-setup/master/specs/releases/linux.txt &
       spinner $!
       ;;
   *)
-      echo -e "\n####################"
+      echo -e "\n${blue}####################$clear"
       echo -e "\nOS not recognized. Exiting."
       exit 1
       ;;
@@ -150,10 +155,15 @@ esac
 
 
 # Test all setup
-echo -e "\nTesting the setup for the Certification"
+echo -e "\n${blue}####################$clear"
+echo -e "\nTesting the setup for the Certification 🐍"
 
 zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_python.sh)"
 zsh -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_packages.sh)"
 python -c "$(curl -fsSL https://raw.githubusercontent.com/JynxZz/certif_setup/main/test_setup.py)"
 
-echo -e "\nNow, it's your turn to code ... "
+
+echo -e "\n${blue}####################$clear"
+echo -e "Now, it's your turn to code ... "
+echo -e "${green}GOOD LUCK !! $clear"
+echo -e "💪 💪 💪 💪 💪 💪"
